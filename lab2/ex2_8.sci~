@@ -1,0 +1,67 @@
+clc;
+clear;
+clf();
+
+// Original signal x(n) = {1, -2, 3↑, 6}
+nx = -2:1;
+x  = [1 -2 3 6];
+
+// =========================
+// y1(n) = x(-n)
+// =========================
+ny1 = -1:2;
+y1  = [6 3 -2 1];
+
+figure(1);
+clf();
+subplot(2,1,1);
+plot2d3(nx, x);
+title("Original signal x(n)");
+xlabel("n");
+ylabel("Amplitude");
+
+subplot(2,1,2);
+plot2d3(ny1, y1);
+title("Manipulated signal y_1(n) = x(-n)");
+xlabel("n");
+ylabel("Amplitude");
+
+// =========================
+// y2(n) = x(n+3)
+// =========================
+ny2 = -5:-2;
+y2  = [1 -2 3 6];
+
+figure(2);
+clf();
+subplot(2,1,1);
+plot2d3(nx, x);
+title("Original signal x(n)");
+xlabel("n");
+ylabel("Amplitude");
+
+subplot(2,1,2);
+plot2d3(ny2, y2);
+title("Manipulated signal y_2(n) = x(n+3)");
+xlabel("n");
+ylabel("Amplitude");
+
+// =========================
+// y3(n) = 2x(-n-2)
+// =========================
+ny3 = -3:0;
+y3  = [12 6 -4 2];
+
+figure(3);
+clf();
+subplot(2,1,1);
+plot2d3(nx, x);
+title("Original signal x(n)");
+xlabel("n");
+ylabel("Amplitude");
+
+subplot(2,1,2);
+plot2d3(ny3, y3);
+title("Manipulated signal y_3(n) = 2x(-n-2)");
+xlabel("n");
+ylabel("Amplitude");
