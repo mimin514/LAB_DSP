@@ -1,0 +1,29 @@
+clc;
+clear;
+clf;
+
+function [yn, yorigin] = delay(xn, xorigin, k)
+
+    yorigin = xorigin - k;
+    N = length(xn);
+    yn = zeros(1, N);
+    yn = xn
+    
+    clf;
+    n_x = (1:N) - xorigin;
+    n_y = (1:N) - yorigin;
+    
+    plot2d3(n_x, xn, style=5);
+    plot2d3(n_y, yn, style=2);
+
+    title("Original and Delayed Signals");
+    xlabel("n");
+    ylabel("Amplitude");
+    legend("x(n)", "y(n)");
+endfunction
+
+
+xn = [1, -2, 3, 6];
+xorigin = 3;
+k = 1;
+[yn, yorigin] = delay(xn, xorigin, k);
