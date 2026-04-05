@@ -1,0 +1,109 @@
+clc;
+clear;
+close;
+
+// ==========================
+// EXERCISE 7 - Circular Convolution
+// ==========================
+
+// Signals
+x = [1 2 -3 2 1];
+h = [1 0 -1 -1 1];
+
+N = length(x);
+M = length(h);
+
+nx = 0:(N-1);
+nh = 0:(M-1);
+
+// ==========================
+// 1. Circular convolution - Folding & Shifting
+// ==========================
+y1 = zeros(1, N);
+
+for n = 1:N
+    s = 0;
+    for k = 1:M
+        idx = pmodulo(n - k, N) + 1;
+        s = s + h(k) * x(idx);
+    end
+    y1(n) = s;
+end
+
+ny = 0:(N-1);
+
+// ==========================
+// 2. Circular convolution - Matrix method
+// ==========================
+Xmat = zeros(N, N);
+
+for i = 1:N
+    for j = 1:N
+        idx = pmodulo(i - j, N) + 1;
+        Xmat(i, j) = x(idx);
+    end
+end
+
+y2 = Xmat * h';
+y2 = y2';
+
+// ==========================
+// 3. Energy
+// ==========================
+ex = x.^2;
+ey = y1.^2;
+
+E_x = sum(ex);
+E_y = sum(ey);
+
+// ==========================
+// 4. Display result
+// ==========================
+disp("Circular convolution by folding and shifting:");
+disp(y1);
+
+disp("Circular convolution by matrix method:");
+disp(y2);
+
+disp("Energy of x(n):");
+disp(E_x);
+
+disp("Energy of y(n):");
+disp(E_y);
+
+// ==========================
+// 5. Plot
+// ==========================
+figure(1);
+
+// ===== 1. x(n) =====
+subplot(2,2,1);
+plot2d3(nx, x, 4);   // blue
+xtitle("x(n)", "n", "Amplitude");
+
+// ===== 2. h(n) =====
+subplot(2,2,2);
+plot2d3(nh, h, 6);   // magenta
+xtitle("h(n)", "n", "Amplitude");
+
+// ===== 3. y(n) =====
+subplot(2,2,3);
+plot2d3(ny, y1, 2);  // red
+xtitle("y(n)", "n", "Amplitude");
+
+// ===== 4. Combined figure =====
+subplot(2,2,4);
+
+n_all = 0:max(ny);
+plot(n_all, zeros(n_all), 'w-');
+set(gca(), "auto_clear", "off");
+
+plot(nx, x, 'b-');
+plot(ny, y1, 'r-');
+plot(n_all, E_x * ones(n_all), 'g--');
+plot(n_all, E_y * ones(n_all), 'm--');
+
+title("Signals x(n), y(n), and Their Energies");
+xlabel("n");
+ylabel("Amplitude/Energy");
+legend("x(n)", "y(n)", "Energy of x", "Energy of y");
